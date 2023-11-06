@@ -1,4 +1,5 @@
-import * as React from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,9 +11,14 @@ import Button from "@mui/material/Button";
 import Badge from "@mui/material/Badge";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { useNavigate } from "react-router-dom";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
 
 export const NavBar = () => {
+  const [showDrawer, setShowDrawer] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -39,15 +45,55 @@ export const NavBar = () => {
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               color="inherit"
+              onClick={() => {
+                setShowDrawer(true);
+              }}
             >
               <MenuIcon />
             </IconButton>
 
-            {/* Open Drawer component */}
+            <Drawer
+              anchor="top"
+              open={showDrawer}
+              onClose={() => {
+                setShowDrawer(false);
+              }}
+            >
+              <Box
+                sx={{
+                  width: "100%",
+                  bgcolor: "background.paper",
+                }}
+              >
+                <nav aria-label="secondary mailbox folders">
+                  <List>
+                    <ListItem disablePadding>
+                      <ListItemButton
+                        onClick={() => {
+                          navigate("/");
+                          setShowDrawer(false);
+                        }}
+                      >
+                        <ListItemText primary="Home" />
+                      </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                      <ListItemButton
+                        onClick={() => {
+                          navigate("/search");
+                          setShowDrawer(false);
+                        }}
+                      >
+                        <ListItemText primary="Search" />
+                      </ListItemButton>
+                    </ListItem>
+                  </List>
+                </nav>
+              </Box>
+            </Drawer>
           </Box>
 
           {/* Mobile Logo */}
