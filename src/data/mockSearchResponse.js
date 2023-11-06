@@ -1,5 +1,5 @@
 export const mockSearchResponse = {
-  status: 200,
+  status: 400,
   data: [
     {
       ASIN: "B08BLTLCV7",

@@ -8,6 +8,8 @@ import { getRandomSearchTerm } from "../utils/getRandomSearchTerm";
 import { mockSearchResponse } from "../data/mockSearchResponse";
 import { TrendingProducts } from "../components/TrendingProducts";
 import { ErrorPanel } from "../components/ErrorPanel";
+import { RecentSearches } from "../components/RecentSearches";
+import { getFromLocalStorage } from "../utils/getFromLocalStorage";
 
 const AMAZON_SEARCH_URL = "https://amazon-price1.p.rapidapi.com/search";
 
@@ -15,6 +17,7 @@ export const Home = () => {
   const [trendingProducts, setTrendingProducts] = useState();
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [recentSearches, setRecentSearches] = useState();
 
   useEffect(() => {
     const searchTerm = getRandomSearchTerm();
@@ -52,7 +55,17 @@ export const Home = () => {
     };
 
     fetchData();
+
+    if (!recentSearches) {
+      const itemsFromLS = getFromLocalStorage("recentSearches", []);
+
+      setRecentSearches(itemsFromLS);
+    }
   }, []);
+
+  const handleClearLocalStorage = () => {
+    setRecentSearches([]);
+  };
 
   return (
     <Stack spacing={3}>
@@ -70,7 +83,14 @@ export const Home = () => {
       {trendingProducts && (
         <TrendingProducts trendingProducts={trendingProducts} />
       )}
-      <div>Recent Searches</div>
+      {recentSearches && (
+        <Box sx={{ p: 3 }}>
+          <RecentSearches
+            recentSearches={recentSearches}
+            handleClearLocalStorage={handleClearLocalStorage}
+          />
+        </Box>
+      )}
     </Stack>
   );
 };
