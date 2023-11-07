@@ -81,7 +81,9 @@ export const Home = () => {
         </Box>
       )}
       {trendingProducts && (
-        <TrendingProducts trendingProducts={trendingProducts} />
+        <Box sx={{ p: 3 }}>
+          <TrendingProducts trendingProducts={trendingProducts} />
+        </Box>
       )}
       {recentSearches && (
         <Box sx={{ p: 3 }}>
