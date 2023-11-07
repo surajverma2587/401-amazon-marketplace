@@ -14,7 +14,6 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
 
 export const ProductCard = ({ product }) => {
-  console.log(product);
   return (
     <Card sx={{ maxWidth: 345, my: 3, position: "relative" }}>
       {product.isPrimeEligible === "1" && (
@@ -34,7 +33,7 @@ export const ProductCard = ({ product }) => {
               {product.price}
             </Typography>
             <Stack spacing={1} alignItems="end">
-              <Rating precision={0.1} value={product.rating} readOnly />
+              <Rating precision={0.1} value={+product.rating} readOnly />
               <Typography gutterBottom variant="caption" component="div">
                 {product.rating} ({product.totalReviews} reviews)
               </Typography>

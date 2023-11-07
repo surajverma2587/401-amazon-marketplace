@@ -5,17 +5,17 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-export const ErrorPanel = () => {
+export const ErrorPanel = ({ title, subTitle }) => {
   const navigate = useNavigate();
 
   return (
     <Card>
       <CardContent>
         <Typography variant="h5" component="div">
-          Failed to load this section...
+          {title}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          Please refresh the page and try again.
+          {subTitle}
         </Typography>
       </CardContent>
       <CardActions>

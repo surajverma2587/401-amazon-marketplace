@@ -1,61 +1,19 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
-import { getRandomSearchTerm } from "../utils/getRandomSearchTerm";
-import { mockSearchResponse } from "../data/mockSearchResponse";
 import { TrendingProducts } from "../components/TrendingProducts";
 import { ErrorPanel } from "../components/ErrorPanel";
 import { RecentSearches } from "../components/RecentSearches";
 import { getFromLocalStorage } from "../utils/getFromLocalStorage";
+import { LoadingSpinner } from "../components/LoadingSpinner";
+import { useFetch } from "../hooks/useFetch";
 
-const AMAZON_SEARCH_URL = "https://amazon-price1.p.rapidapi.com/search";
-
-export const Home = () => {
-  const [trendingProducts, setTrendingProducts] = useState();
-  const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+export const Home = ({ query }) => {
   const [recentSearches, setRecentSearches] = useState();
 
+  const { data, isLoading, error } = useFetch(query);
+
   useEffect(() => {
-    const searchTerm = getRandomSearchTerm();
-
-    const fetchData = async () => {
-      setIsLoading(true);
-
-      try {
-        // const response = await axios.get(AMAZON_SEARCH_URL, {
-        //   headers: {
-        //     "X-RapidAPI-Key": process.env.REACT_APP_X_RAPID_API_KEY,
-        //     "X-RapidAPI-Host": process.env.REACT_APP_X_RAPID_API_HOST,
-        //   },
-        //   params: {
-        //     keywords: searchTerm,
-        //     marketplace: "GB",
-        //   },
-        // });
-
-        const response = mockSearchResponse;
-
-        if (response.status !== 200) {
-          setError(true);
-          setTrendingProducts();
-        } else {
-          setError(false);
-          setTrendingProducts(response.data.slice(0, 5));
-        }
-      } catch (error) {
-        setError(true);
-        setTrendingProducts();
-      }
-
-      setIsLoading(false);
-    };
-
-    fetchData();
-
     if (!recentSearches) {
       const itemsFromLS = getFromLocalStorage("recentSearches", []);
 
@@ -69,20 +27,18 @@ export const Home = () => {
 
   return (
     <Stack spacing={3}>
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={isLoading}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <LoadingSpinner open={isLoading} />
       {error && (
         <Box sx={{ p: 3 }}>
-          <ErrorPanel />
+          <ErrorPanel
+            title="Failed to load this section..."
+            subTitle="Please refresh the page and try again."
+          />
         </Box>
       )}
-      {trendingProducts && (
+      {data && data.length > 0 && (
         <Box sx={{ p: 3 }}>
-          <TrendingProducts trendingProducts={trendingProducts} />
+          <TrendingProducts trendingProducts={data} />
         </Box>
       )}
       {recentSearches && (

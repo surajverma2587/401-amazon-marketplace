@@ -4,8 +4,15 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import { useNavigate } from "react-router-dom";
 
 export const RecentSearches = ({ recentSearches, handleClearLocalStorage }) => {
+  const navigate = useNavigate();
+
   return (
     <Card>
       <CardContent>
@@ -17,7 +24,23 @@ export const RecentSearches = ({ recentSearches, handleClearLocalStorage }) => {
             You have no recent searches!
           </Alert>
         )}
-        {recentSearches.length !== 0 && <div>ITEMS</div>}
+        {recentSearches.length !== 0 && (
+          <List>
+            {recentSearches.map((recentSearch) => {
+              return (
+                <ListItem disablePadding key={crypto.randomUUID()}>
+                  <ListItemButton
+                    onClick={() => {
+                      navigate(`/search?q=${recentSearch}`);
+                    }}
+                  >
+                    <ListItemText primary={recentSearch} />
+                  </ListItemButton>
+                </ListItem>
+              );
+            })}
+          </List>
+        )}
       </CardContent>
       <CardActions>
         <Button

@@ -6,11 +6,12 @@ import { WishList } from "./pages/WishList";
 import { Search } from "./pages/Search";
 import { Checkout } from "./pages/Checkout";
 import { NoMatch } from "./pages/NoMatch";
+import { getRandomSearchTerm } from "./utils/getRandomSearchTerm";
 
 export const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Home query={getRandomSearchTerm()} />} />
       <Route path="/wishlist" element={<WishLists />} />
       <Route path="/wishlist/:wishListId" element={<WishList />} />
       <Route path="/search" element={<Search />} />
