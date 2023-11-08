@@ -1,11 +1,12 @@
 import { createContext, useContext, useReducer } from "react";
 import { appReducer } from "../reducer/appReducer";
+import { getFromLocalStorage } from "../utils/getFromLocalStorage";
 
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const initialState = {
-    basket: [],
+    basket: getFromLocalStorage("basket", []),
   };
 
   const [state, dispatch] = useReducer(appReducer, initialState);

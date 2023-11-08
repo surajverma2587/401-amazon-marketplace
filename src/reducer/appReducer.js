@@ -9,9 +9,13 @@ export const appReducer = (state, action) => {
     if (!isExist) {
       newItem.quantity = 1;
 
+      const newBasket = [newItem, ...state.basket];
+
+      localStorage.setItem("basket", JSON.stringify(newBasket));
+
       return {
         ...state,
-        basket: [newItem, ...state.basket],
+        basket: newBasket,
       };
     }
 
@@ -25,6 +29,21 @@ export const appReducer = (state, action) => {
 
       return item;
     });
+
+    localStorage.setItem("basket", JSON.stringify(newBasket));
+
+    return {
+      ...state,
+      basket: newBasket,
+    };
+  }
+
+  if (action.type === "REMOVE_ITEM") {
+    const newBasket = state.basket.filter((item) => {
+      return item.ASIN !== action.payload;
+    });
+
+    localStorage.setItem("basket", JSON.stringify(newBasket));
 
     return {
       ...state,

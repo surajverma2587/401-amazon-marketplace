@@ -154,7 +154,12 @@ export const NavBar = () => {
                 navigate("/checkout");
               }}
             >
-              <Badge badgeContent={state.basket.length} color="error">
+              <Badge
+                badgeContent={state.basket.reduce((acc, item) => {
+                  return acc + item.quantity;
+                }, 0)}
+                color="error"
+              >
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
