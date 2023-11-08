@@ -81,10 +81,24 @@ export const CheckoutItem = ({ item }) => {
             </Box>
             <Box>
               <Stack direction="row">
-                <IconButton>
+                <IconButton
+                  onClick={() => {
+                    dispatch({
+                      type: "DECREASE_QUANTITY",
+                      payload: item.ASIN,
+                    });
+                  }}
+                >
                   <RemoveIcon />
                 </IconButton>
-                <IconButton>
+                <IconButton
+                  onClick={() => {
+                    dispatch({
+                      type: "INCREASE_QUANTITY",
+                      payload: item.ASIN,
+                    });
+                  }}
+                >
                   <AddIcon />
                 </IconButton>
               </Stack>

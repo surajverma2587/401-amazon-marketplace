@@ -51,5 +51,53 @@ export const appReducer = (state, action) => {
     };
   }
 
+  if (action.type === "INCREASE_QUANTITY") {
+    const newBasket = state.basket.map((item) => {
+      if (item.ASIN === action.payload) {
+        return {
+          ...item,
+          quantity: item.quantity + 1,
+        };
+      }
+
+      return item;
+    });
+
+    localStorage.setItem("basket", JSON.stringify(newBasket));
+
+    return {
+      ...state,
+      basket: newBasket,
+    };
+  }
+
+  if (action.type === "DECREASE_QUANTITY") {
+    const newBasket = state.basket.map((item) => {
+      if (item.ASIN === action.payload) {
+        const currentQuantity = item.quantity;
+
+        if (currentQuantity > 1) {
+          return {
+            ...item,
+            quantity: item.quantity - 1,
+          };
+        } else {
+          return undefined;
+        }
+      }
+
+      return item;
+    });
+
+    const newBasketToAdd = newBasket.filter((e) => e);
+
+    localStorage.setItem("basket", JSON.stringify(newBasketToAdd));
+
+    return {
+      ...state,
+      basket: newBasketToAdd,
+    };
+  }
+
   return state;
 };
