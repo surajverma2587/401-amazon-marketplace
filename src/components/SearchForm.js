@@ -6,10 +6,10 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 
-export const SearchForm = ({ onSuccess }) => {
+export const SearchForm = ({ onSuccess, initialSearchTerm }) => {
   const formik = useFormik({
     initialValues: {
-      query: "",
+      query: initialSearchTerm || "",
     },
     validationSchema: Yup.object({
       query: Yup.string().required("Please enter a valid product name."),

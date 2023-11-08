@@ -15,18 +15,18 @@ export const useFetch = (query) => {
         setIsLoading(true);
 
         try {
-          const response = await axios.get(AMAZON_SEARCH_URL, {
-            headers: {
-              "X-RapidAPI-Key": process.env.REACT_APP_X_RAPID_API_KEY,
-              "X-RapidAPI-Host": process.env.REACT_APP_X_RAPID_API_HOST,
-            },
-            params: {
-              keywords: query,
-              marketplace: "GB",
-            },
-          });
+          // const response = await axios.get(AMAZON_SEARCH_URL, {
+          //   headers: {
+          //     "X-RapidAPI-Key": process.env.REACT_APP_X_RAPID_API_KEY,
+          //     "X-RapidAPI-Host": process.env.REACT_APP_X_RAPID_API_HOST,
+          //   },
+          //   params: {
+          //     keywords: query,
+          //     marketplace: "GB",
+          //   },
+          // });
 
-          // const response = mockSearchResponse;
+          const response = mockSearchResponse;
 
           if (response.status !== 200) {
             setError(true);

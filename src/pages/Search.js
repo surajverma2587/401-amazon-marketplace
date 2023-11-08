@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -7,6 +7,7 @@ import { useFetch } from "../hooks/useFetch";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import { ErrorPanel } from "../components/ErrorPanel";
 import { SearchResults } from "../components/SearchResults";
+import { getFromLocalStorage } from "../utils/getFromLocalStorage";
 
 export const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -20,11 +21,25 @@ export const Search = () => {
     setSearchTerm(query);
   };
 
+  useEffect(() => {
+    if (data) {
+      const itemsFromLS = getFromLocalStorage("recentSearches", []);
+
+      const filterItems = itemsFromLS.filter((itemFromLS) => {
+        return itemFromLS !== searchTerm;
+      });
+
+      const newItems = [searchTerm, ...filterItems];
+
+      localStorage.setItem("recentSearches", JSON.stringify(newItems));
+    }
+  }, [data]);
+
   return (
     <Stack spacing={3}>
       <LoadingSpinner open={isLoading} />
       <Box sx={{ p: 3 }}>
-        <SearchForm onSuccess={onSuccess} />
+        <SearchForm onSuccess={onSuccess} initialSearchTerm={searchTerm} />
       </Box>
       {error && (
         <Box sx={{ p: 3 }}>
@@ -34,9 +49,17 @@ export const Search = () => {
           />
         </Box>
       )}
-      {data && data.length > 0 && (
+      {data && Array.isArray(data) && data.length > 0 && (
         <Box sx={{ p: 3 }}>
           <SearchResults results={data} />
+        </Box>
+      )}
+      {data && !Array.isArray(data) && (
+        <Box sx={{ p: 3 }}>
+          <ErrorPanel
+            title="No data available..."
+            subTitle="Please refresh the page and try again."
+          />
         </Box>
       )}
     </Stack>

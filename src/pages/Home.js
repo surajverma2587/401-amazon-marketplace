@@ -36,9 +36,17 @@ export const Home = ({ query }) => {
           />
         </Box>
       )}
-      {data && data.length > 0 && (
+      {data && Array.isArray(data) && data.length > 0 && (
         <Box sx={{ p: 3 }}>
-          <TrendingProducts trendingProducts={data} />
+          <TrendingProducts trendingProducts={data.slice(0, 5)} />
+        </Box>
+      )}
+      {data && !Array.isArray(data) && (
+        <Box sx={{ p: 3 }}>
+          <ErrorPanel
+            title="No data available..."
+            subTitle="Please refresh the page and try again."
+          />
         </Box>
       )}
       {recentSearches && (
