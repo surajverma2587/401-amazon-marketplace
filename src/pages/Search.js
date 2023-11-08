@@ -8,8 +8,11 @@ import { LoadingSpinner } from "../components/LoadingSpinner";
 import { ErrorPanel } from "../components/ErrorPanel";
 import { SearchResults } from "../components/SearchResults";
 import { getFromLocalStorage } from "../utils/getFromLocalStorage";
+import { useApp } from "../context/AppProvider";
 
 export const Search = () => {
+  const { state } = useApp();
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [searchTerm, setSearchTerm] = useState(searchParams.get("q"));
@@ -35,6 +38,7 @@ export const Search = () => {
     }
   }, [data]);
 
+  console.log(state);
   return (
     <Stack spacing={3}>
       <LoadingSpinner open={isLoading} />

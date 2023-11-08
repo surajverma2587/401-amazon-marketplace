@@ -12,8 +12,11 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
+import { useApp } from "../context/AppProvider";
 
 export const ProductCard = ({ product }) => {
+  const { dispatch } = useApp();
+
   return (
     <Card sx={{ maxWidth: 345, my: 3, position: "relative" }}>
       {product.isPrimeEligible === "1" && (
@@ -70,7 +73,14 @@ export const ProductCard = ({ product }) => {
                 justifyContent: "center",
               }}
             >
-              <IconButton>
+              <IconButton
+                onClick={() => {
+                  dispatch({
+                    type: "ADD_ITEM",
+                    payload: product,
+                  });
+                }}
+              >
                 <AddShoppingCartIcon />
               </IconButton>
             </Grid>
