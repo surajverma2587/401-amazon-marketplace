@@ -13,7 +13,7 @@ export const WishListItem = ({ wishlist }) => {
     <ListItem>
       <ListItemButton
         onClick={() => {
-          navigate("/wishlist/123");
+          navigate(`/wishlist/${wishlist.id}`);
         }}
       >
         <ListItemIcon>

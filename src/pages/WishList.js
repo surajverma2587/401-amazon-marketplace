@@ -1,3 +1,7 @@
+import { useParams } from "react-router-dom";
+
 export const WishList = () => {
-  return <div>WishList</div>;
+  const { wishListId } = useParams();
+
+  return <div>WishList - {wishListId}</div>;
 };
