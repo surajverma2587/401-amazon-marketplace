@@ -34,7 +34,7 @@ export const CreateWishListModal = ({ showModal, setShowModal }) => {
     onSubmit: ({ title }) => {
       const wishlist = {
         id: crypto.randomUUID(),
-        title,
+        label: title,
         createdOn: moment().format("DD/MM/YYYY"),
         items: [],
       };

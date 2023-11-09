@@ -21,7 +21,7 @@ export const WishListItem = ({ wishlist }) => {
             <ShoppingBasketIcon />
           </Badge>
         </ListItemIcon>
-        <ListItemText primary={wishlist.title} secondary={wishlist.createdOn} />
+        <ListItemText primary={wishlist.label} secondary={wishlist.createdOn} />
       </ListItemButton>
     </ListItem>
   );

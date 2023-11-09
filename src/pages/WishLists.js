@@ -47,7 +47,9 @@ export const WishLists = () => {
               {state.wishlists.length > 0 && (
                 <List>
                   {state.wishlists.map((wishlist) => {
-                    return <WishListItem wishlist={wishlist} />;
+                    return (
+                      <WishListItem key={wishlist.id} wishlist={wishlist} />
+                    );
                   })}
                 </List>
               )}

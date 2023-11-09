@@ -119,5 +119,25 @@ export const appReducer = (state, action) => {
     };
   }
 
+  if (action.type === "ADD_ITEM_TO_WISH_LIST") {
+    const newWishLists = state.wishlists.map((wishlist) => {
+      if (wishlist.id === action.payload.wishListId) {
+        return {
+          ...wishlist,
+          items: [action.payload.item, ...wishlist.items],
+        };
+      }
+
+      return wishlist;
+    });
+
+    localStorage.setItem("wishlists", JSON.stringify(newWishLists));
+
+    return {
+      ...state,
+      wishlists: newWishLists,
+    };
+  }
+
   return state;
 };

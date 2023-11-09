@@ -13,12 +13,20 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import { useApp } from "../context/AppProvider";
+import { useState } from "react";
+import { AddToWishListModal } from "./AddToWishListModal";
 
 export const ProductCard = ({ product }) => {
   const { dispatch } = useApp();
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <Card sx={{ maxWidth: 345, my: 3, position: "relative" }}>
+      <AddToWishListModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        product={product}
+      />
       {product.isPrimeEligible === "1" && (
         <LoyaltyIcon sx={{ position: "absolute", top: "10px", left: "10px" }} />
       )}
@@ -94,7 +102,11 @@ export const ProductCard = ({ product }) => {
                 justifyContent: "center",
               }}
             >
-              <IconButton>
+              <IconButton
+                onClick={() => {
+                  setShowModal(true);
+                }}
+              >
                 <FavoriteBorderIcon />
               </IconButton>
             </Grid>

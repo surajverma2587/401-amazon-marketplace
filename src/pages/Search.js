@@ -38,7 +38,6 @@ export const Search = () => {
     }
   }, [data]);
 
-  console.log(state);
   return (
     <Stack spacing={3}>
       <LoadingSpinner open={isLoading} />
