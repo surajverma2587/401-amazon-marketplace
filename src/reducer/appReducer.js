@@ -108,5 +108,16 @@ export const appReducer = (state, action) => {
     };
   }
 
+  if (action.type === "CREATE_WISHLIST") {
+    const newWishlists = [action.payload, ...state.wishlists];
+
+    localStorage.setItem("wishlists", JSON.stringify(newWishlists));
+
+    return {
+      ...state,
+      wishlists: newWishlists,
+    };
+  }
+
   return state;
 };
