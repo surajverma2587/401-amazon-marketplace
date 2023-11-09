@@ -11,12 +11,13 @@ import IconButton from "@mui/material/IconButton";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import DeleteIcon from "@mui/icons-material/Delete";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import { useApp } from "../context/AppProvider";
 import { useState } from "react";
 import { AddToWishListModal } from "./AddToWishListModal";
 
-export const ProductCard = ({ product }) => {
+export const ProductCard = ({ product, showDelete, wishListId }) => {
   const { dispatch } = useApp();
   const [showModal, setShowModal] = useState(false);
 
@@ -102,13 +103,29 @@ export const ProductCard = ({ product }) => {
                 justifyContent: "center",
               }}
             >
-              <IconButton
-                onClick={() => {
-                  setShowModal(true);
-                }}
-              >
-                <FavoriteBorderIcon />
-              </IconButton>
+              {showDelete ? (
+                <IconButton
+                  onClick={() => {
+                    dispatch({
+                      type: "REMOVE_ITEM_FROM_WISH_LIST",
+                      payload: {
+                        wishListId,
+                        productId: product.ASIN,
+                      },
+                    });
+                  }}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              ) : (
+                <IconButton
+                  onClick={() => {
+                    setShowModal(true);
+                  }}
+                >
+                  <FavoriteBorderIcon />
+                </IconButton>
+              )}
             </Grid>
           </Grid>
         </CardActions>

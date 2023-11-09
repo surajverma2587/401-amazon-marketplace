@@ -139,5 +139,30 @@ export const appReducer = (state, action) => {
     };
   }
 
+  if (action.type === "REMOVE_ITEM_FROM_WISH_LIST") {
+    console.log(action);
+    const newWishLists = state.wishlists.map((wishlist) => {
+      if (wishlist.id === action.payload.wishListId) {
+        const newItems = wishlist.items.filter((item) => {
+          return item.ASIN !== action.payload.productId;
+        });
+
+        return {
+          ...wishlist,
+          items: newItems,
+        };
+      }
+
+      return wishlist;
+    });
+
+    localStorage.setItem("wishlists", JSON.stringify(newWishLists));
+
+    return {
+      ...state,
+      wishlists: newWishLists,
+    };
+  }
+
   return state;
 };

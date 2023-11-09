@@ -36,12 +36,15 @@ export const AddToWishListModal = ({ showModal, setShowModal, product }) => {
     onSubmit: ({ title }) => {
       const wishlist = {
         id: crypto.randomUUID(),
-        title,
+        label: title,
         createdOn: moment().format("DD/MM/YYYY"),
-        items: [],
+        items: [product],
       };
 
-      dispatch({ type: "CREATE_WISHLIST", payload: wishlist });
+      dispatch({
+        type: "CREATE_WISHLIST",
+        payload: wishlist,
+      });
 
       setShowModal(false);
 
