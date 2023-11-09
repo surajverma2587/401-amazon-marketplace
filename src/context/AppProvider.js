@@ -7,6 +7,7 @@ export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const initialState = {
     basket: getFromLocalStorage("basket", []),
+    wishlists: getFromLocalStorage("wishlists", []),
   };
 
   const [state, dispatch] = useReducer(appReducer, initialState);
