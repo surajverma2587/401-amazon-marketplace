@@ -8,13 +8,11 @@ import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import { useApp } from "../context/AppProvider";
 import { CheckoutItem } from "../components/CheckoutItem";
 
 export const Checkout = () => {
-  const { state } = useApp();
+  const { state, dispatch } = useApp();
 
   return (
     <Stack spacing={3}>
@@ -48,7 +46,9 @@ export const Checkout = () => {
                 variant="contained"
                 color="error"
                 onClick={() => {
-                  localStorage.removeItem("basket");
+                  dispatch({
+                    type: "CLEAR_BASKET",
+                  });
                 }}
               >
                 Clear Basket

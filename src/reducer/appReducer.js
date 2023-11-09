@@ -99,5 +99,14 @@ export const appReducer = (state, action) => {
     };
   }
 
+  if (action.type === "CLEAR_BASKET") {
+    localStorage.removeItem("basket");
+
+    return {
+      ...state,
+      basket: [],
+    };
+  }
+
   return state;
 };
